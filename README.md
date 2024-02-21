@@ -16,7 +16,7 @@ You will need to ensure that the file structure you create is correct, since the
    1. `app.py`
    2. `hosts.csv`
 
-2. `C:\path\to\monitoring_tools\Template\index.html`
+2. `C:\path\to\monitoring_tools\Template\index.html`  
 Be sure to change `C:\path\to\monitoring_tools` to that actual path your instance will use.
 
 ## Logic of the program
