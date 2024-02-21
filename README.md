@@ -4,14 +4,10 @@
 What this tool is designed to do, is use a web browser (currently ran on the local interface (127.0.0.1:5000), but will be moved to an http:///{some_IP_address} at some point), that allows the user to monitor the status of their Hosts and VMs, while allowing them to use python to spin up new VMs for testing {or whateve}.
 
 ## Prerequisites
-admin privilages on the system that will be hosting the server
-
-flask
-
-nmap
-
-proxmoxer (that is the hypervisor used in buidling/testing this)
-
+admin privilages on the system that will be hosting the server  
+flask  
+nmap  
+proxmoxer (that is the hypervisor used in buidling/testing this)  
 DNS configuration (I used PFsense in building this)
 
 ## File Structure
