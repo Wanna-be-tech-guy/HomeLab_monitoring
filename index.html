@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviroment Monitoring and Provisioning</title>
+  <style>
+    body {
+      background-color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    h1, h2 {
+      color: #ffffff;
+      background-color: #3498db; /* Blue color for header and footer */
+      padding: 10px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #3498db; /* Blue color for section headers */
+    }
+
+    .provision-button {
+      background-color: #3498db; /* Blue color for provision VM button */
+      color: #ffffff;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #3498db; /* Blue color for table header */
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Enter IP Range to scan
+    <br>
+    <input type="text" placeholder="Accepted formatting: 192.168.103.0/24, 10.10.48.100-250" id="ipRangeInput">
+    <button onclick="scanNow()" id="scanButton">Scan Now</button>
+    <p style="font-style: italic;">Accepted formating: 192.168.103.0/24, 10.10.48.100-250</p>
+  </header>
+    <div class="container">
+    <h2>Scan Results</h2>
+    <table id="scanResultsTable">
+      <!-- Table content will be dynamically populated after the scan -->
+    </table>
+    <h2>VM Provisioning</h2>
+    <form action="/provision" method="post">
+      <!-- Host Selection Dropdown -->
+      <label for="selected_host">Select Host:</label>
+      <select id="selected_host" name="selected_host" required>
+        <option value="" disabled selected>Select a host</option>
+        {% for host in hosts_list %}
+          <option value="{{ host['FQDN'] }}">{{ host['FQDN'] }}</option>
+        {% endfor %}
+      </select>
+      <!-- VM Provisioning Table -->
+      <table>
+        <tr>
+          <th>Option</th>
+          <th>Value</th>
+        </tr>
+        <tr>
+          <td>VM Name:</td>
+          <td><input type="text" name="vm_name" required></td>
+        </tr>
+        <tr>
+          <td>Memory (MB):</td>
+          <td><input type="number" name="memory" required></td>
+        </tr>
+        <tr>
+          <td>CPUs:</td>
+          <td><input type="number" name="cpus" required></td>
+        </tr>
+        <!-- Add more options as needed -->
+      </table>
+      <!-- Provision VM Button -->
+      <button type="submit" class="provision-button">Provision VM</button>
+    </form>
+  <footer>
+    &copy; A creation of AnCo (and HUGE help from OpenAI and ChatGPT). Open Source!
+  </footer>
+  <script>
+    function scanNow() {
+        var selectedRange = document.getElementById("ipRangeInput").value;
+
+        // Make AJAX request
+        fetch('/scan', {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+            body: JSON.stringify({ ip_range: selectedRange }),
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            // Handle the received data (update table, etc.)
+            console.log(data); // Log the data to the console for debugging
+            var resultsContainer = document.getElementById("scanResultsTable");
+            resultsContainer.innerHTML = ""; // Clear previous results
+
+            // Loop through the results and create a table
+            var table = document.createElement("table");
+            var thead = document.createElement("thead");
+            var tbody = document.createElement("tbody");
+            var headerRow = document.createElement("tr");
+            ["FQDN", "IP", "Status"].forEach(function (header) {
+                var th = document.createElement("th");
+                th.appendChild(document.createTextNode(header));
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+            data.forEach(function (result) {
+                var tr = document.createElement("tr");
+                ["hostname", "ip", "status"].forEach(function (key) {
+                    var td = document.createElement("td");
+                    td.appendChild(document.createTextNode(result[key]));
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            resultsContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+</body>
+</html>
