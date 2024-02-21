@@ -1,23 +1,28 @@
-# Welcome to the "homelab montioring and provisioning tool". 
+## Welcome to the "homelab montioring and provisioning tool". 
 
-# About
+## About
 What this tool is designed to do, is use a web browser (currently ran on the local interface (127.0.0.1:5000), but will be moved to an http:///{some_IP_address} at some point), that allows the user to monitor the status of their Hosts and VMs, while allowing them to use python to spin up new VMs for testing {or whateve}.
 
-# Prerequisites
-1. admin privilages on the system that will be hosting the server
-2. flask
-3. nmap
-4. proxmoxer (that is the hypervisor used in buidling/testing this)
-5. DNS configuration (I used PFsense in building this)
+## Prerequisites
+admin privilages on the system that will be hosting the server
 
-# File Structure
+flask
+
+nmap
+
+proxmoxer (that is the hypervisor used in buidling/testing this)
+
+DNS configuration (I used PFsense in building this)
+
+## File Structure
 You will need to ensure that the file structure you create is correct, since there parts of the code (html) that use certain paths to locate the inforamtion that will be displayed. So the structure should be as follows:
-1. Root directory: C:\path\to\monitoring_tools (root directory)
-1.2. app.py
-1.3. hosts.csv
-2.C:\path\to\monitoring_tools\Template\index.html
+1. Root directory: `C:\path\to\monitoring_tools` (root directory)
+   1. `app.py`
+   2. `hosts.csv`
 
-# Logic of the program
+2. `C:\path\to\monitoring_tools\Template\index.html`
+
+## Logic of the program
 The nmap scan passes the following arguments to NMAP: -R (to resolve the hostname), -v (for verbose data in the terminal :)), and -sn (for a clean simple scan).
 It will take the normal range of inputs like: 192.168.103.1, or ranges like: 192.168.103.1-20 an it can scan entire subnets like 192.168.103.0/24.
 It will display the output like:
