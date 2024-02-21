@@ -9,6 +9,20 @@ nmap
 proxmoxer (that is the hypervisor used in buidling/testing this)
 DNS configuration (I used PFsense in building this)
 
+
+Program Hierarcy:
+Root Directory
+|______Templates
+       |__index.html
+|__ app.py
+|_hosts.csv
+
+Once the struture is built, it should like something like this:
+C:\path\to\monitoring_tools (root directory)
+app.py
+hosts.csv
+C:\path\to\monitoring_tools\Template\index.html
+
 Logic of the program:
 
 The nmap scan passes the following arguments to NMAP: -R (to resolve the hostname), -v (for verbose data in the terminal :)), and -sn (for a clean simple scan).
