@@ -17,17 +17,17 @@ You will need to ensure that the file structure you create is correct, since the
    2. `hosts.csv`
 
 2. `C:\path\to\monitoring_tools\Template\index.html`
+Be sure to change `C:\path\to\monitoring_tools` to that actual path your instance will use.
 
 ## Logic of the program
-The nmap scan passes the following arguments to NMAP: -R (to resolve the hostname), -v (for verbose data in the terminal :)), and -sn (for a clean simple scan).
-It will take the normal range of inputs like: 192.168.103.1, or ranges like: 192.168.103.1-20 an it can scan entire subnets like 192.168.103.0/24.
-It will display the output like:
-FQDN | IP | Status (up or down)
+The nmap scan passes the following arguments to NMAP: -R (to resolve the hostname), -v (for verbose data in the terminal :)), and -sn (for a clean simple scan).  
+It will take the normal range of inputs like: 192.168.103.1, or ranges like: 192.168.103.1-20 an it can scan entire subnets like 192.168.103.0/24.  
+It will display the output like:  
+FQDN | IP | Status (up or down)  
 
-The provsioning section allows you select a host (pulled from hosts.csv{modify file as needed. one host per line)) to add the VM to. There is a dropdown that will allow you to look at the OS's currently available on that host. You can tweak all the normal setings during creation. Make sure you have root prviilages to your Proxmox instance too.
+The provsioning section allows you select a host (pulled from hosts.csv{modify file as needed. one host per line)) to add the VM to. There is a dropdown that will allow you to look at the OS's currently available on that host. You can tweak all the normal setings during creation. Make sure you have root prviilages to your Proxmox instance too.  
+Once the VM has been created, the program will interact the PFsesne API to create a resolvable DNS reservation for the newly created VM.  
 
-Once the VM has been created, the program will interact the PFsesne API to create a resolvable DNS reservation for the newly created VM.
-
-Have fun. Feel free to tweak as needed!
+Have fun. Feel free to tweak as needed!  
 
 -Andrew (AnCo!)
